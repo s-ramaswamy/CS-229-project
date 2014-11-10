@@ -12,5 +12,15 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
+# builds a quick and dirty model for project milestone report
+def quick_and_dirty(df):
+	X = np.matrix(df.user_review_count)
+	ones = np.ones((X.size,1))
+	print ones.shape
+	print X.shape
+	print X[0]
+	X = np.concatenate((X.T,ones), 1)
+	Y = np.matrix(df.user_average_stars)
+	return X, Y.T
 
 

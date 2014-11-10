@@ -38,8 +38,8 @@ def load_data():
 		json_data = [json.loads(line) for line in open(data_directory + file_name)]
 		df_final_test.append(pd.DataFrame(json_data))
 	dfIdLookupTable = pd.read_csv(data_directory+'IdLookupTable.csv')
+	
 	print 'finished loading'
-
 	return df_training, df_final_test, dfIdLookupTable
 
 # clean data of bad/missing fields
