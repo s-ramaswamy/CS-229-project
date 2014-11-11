@@ -30,7 +30,8 @@ X, Y = features.not_so_quick(df_training[2],df_training[1],df_training[0])
 xtrain, xtest, ytrain, ytest = train_test_split(X, Y)
 clf = linear_model.LinearRegression().fit(xtrain, ytrain)
 
-print "Accuracy: %0.2f%%" % (100 * clf.score(xtest, ytest))
+print "RMSE: %.2f" % np.sqrt(np.mean((clf.predict(xtest) - ytest) ** 2))
+# print "Accuracy: %0.2f%%" % (100 * clf.score(xtest, ytest))
 
 # save results
 
