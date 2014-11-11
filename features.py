@@ -12,6 +12,17 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
+def get_names_list():
+    a = list()
+    b = list()
+    with open("./Data/names.txt","r") as myfile:
+        for line in myfile:
+            if(line.split()[1]=="f"):
+              a.append(line.split()[0])
+            else:  
+              b.append(line.split()[0])
+    return a,b  
+
 # builds a quick and dirty model for project milestone report
 def quick_and_dirty(df):
     X = np.matrix(df.user_review_count)
@@ -27,15 +38,21 @@ def not_so_quick(users,business,reviews):
     n_reviews = 1000
     userlist = []
     buslist = []
-    features = np.empty([1,4]);
+    features = np.empty([1,5]);
     review_stars_vector = np.empty([1,1]);
+    male_names,female_names = get_names_list();
     for i in range(n_reviews):
         user_avg_stars = 3.76
         bus_stars = 3.76
+        gender = 0
         user = (users[users.user_id == reviews.user_id.iloc[i]])
         if(not user.empty):
             user_avg_stars = user.iat[0,0]
             user_review_count  = user.iat[0,2]
+            if(user.iat[0,1] in female_names):
+                gender = 1
+            elif(user.iat[0,1] in male_names):
+                gender = -1
         bus = (business[business.business_id == reviews.business_id.iloc[i]])
         if(not bus.empty):
             bus_stars = bus.iat[0,10]
