@@ -58,7 +58,7 @@ def not_so_quick(users,business,reviews):
             bus_stars = bus.iat[0,10]
             bus_review_count = bus.iat[0,9]
         review_stars = reviews.iloc[i]['rev_stars']
-        new_features = [user_avg_stars,user_review_count,bus_stars,bus_review_count]
+        new_features = [user_avg_stars,user_review_count,bus_stars,bus_review_count,gender]
         features = np.vstack([features,new_features]);
         review_stars_vector = np.vstack([review_stars_vector,review_stars]);
     X = np.matrix(features)
