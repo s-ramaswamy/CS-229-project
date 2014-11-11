@@ -20,12 +20,13 @@ df_training_all, df_test_all = wrangle.merge_data(df_training, df_test, df_ID_ta
 print df_training_all.head()
 
 # feature selection
-X, Y = features.quick_and_dirty(df_training[2])
+#X, Y = features.quick_and_dirty(df_training[2])
+X, Y = features.not_so_quick(df_training[2],df_training[1],df_training[0])
 
 # machine learning aka CS229 
 # splits for now-in the future we need to make the test matrix from the data
-print X.shape
-print Y.shape
+# print X.shape
+# print Y.shape
 xtrain, xtest, ytrain, ytest = train_test_split(X, Y)
 clf = linear_model.LinearRegression().fit(xtrain, ytrain)
 
