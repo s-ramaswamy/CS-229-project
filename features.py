@@ -27,7 +27,7 @@ def not_so_quick(users,business,reviews):
     n_reviews = 1000
     userlist = []
     buslist = []
-    features = np.empty([1,4];
+    features = np.empty([1,4]);
     review_stars_vector = np.empty([1,1]);
     for i in range(n_reviews):
         user_avg_stars = 3.76
