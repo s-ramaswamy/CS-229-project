@@ -45,6 +45,8 @@ def not_so_quick(users,business,reviews):
         user_avg_stars = 3.76
         bus_stars = 3.76
         gender = 0
+        user_review_count = 10
+        bus_review_count = 10
         user = (users[users.user_id == reviews.user_id.iloc[i]])
         if(not user.empty):
             user_avg_stars = user.iat[0,0]
