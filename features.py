@@ -43,7 +43,7 @@ def not_so_quick(users,business,reviews):
         review_stars = reviews.iloc[i]['rev_stars']
         new_features = [user_avg_stars,user_review_count,bus_stars,bus_review_count]
         features = np.vstack([features,new_features]);
-        review_ = np.vstack([review_stars_vector,review_stars]);
+        review_stars_vector = np.vstack([review_stars_vector,review_stars]);
     X = np.matrix(features)
     Y = np.matrix(review_stars_vector)
     return X,Y
