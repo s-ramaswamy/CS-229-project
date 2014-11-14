@@ -12,7 +12,7 @@ from sklearn import cross_validation, linear_model
 import wrangle
 import features
 
-Load, clean, and wrangle data
+#Load, clean, and wrangle data
 df_training, df_test, df_ID_table = wrangle.load_data()
 df_training, df_test = wrangle.clean_data(df_training, df_test)
 df_training, df_test = wrangle.rename_data(df_training, df_test)
