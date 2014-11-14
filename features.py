@@ -24,15 +24,16 @@ def get_names_list():
     return a,b
 
 def get_gender(names):
-    gender = []
+    gender = np.empty([names.size])
     female_names, male_names = get_names_list()
+    i = 0
     for name in names:
+        gender[i] = 0
         if(name.upper() in female_names):
-            np.vstack(gender,1)
-        elif(name.upper in male_names):
-            np.vstack(gender,-1)
-        else:
-            np.vstack(gender,0)
+            gender[i] = 1
+        elif(name.upper() in male_names):
+            gender[i] = -1
+        i = i + 1    
     return gender
 
 # builds a quick and dirty model for project milestone report
@@ -79,10 +80,7 @@ def not_so_quick(users,business,reviews):
     Y = np.matrix(review_stars_vector)
     return X,Y
 
-def not_so_quick_block(block):
-    n_reviews = 1000
-    userlist = []
-    buslist = []
+def not_so_quick_train(block):
     review_stars_vector = block.rev_stars.values
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
@@ -92,9 +90,23 @@ def not_so_quick_block(block):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count]
-    X = np.matrix(features)
-    Y = np.matrix(review_stars_vector)
+    X = np.matrix(features).T
+    Y = np.matrix(review_stars_vector).T
     return X,Y
+
+def not_so_quick_test(block)
+    user_name = block.user_name.values
+    user_average_stars = block.user_average_stars.values
+    gender = get_gender(user_name)
+    bus_open = block.bus_open.values
+    bus_stars = block.bus_stars.values
+    bus_review_count = block.bus_review_count.values
+    user_review_count = block.user_review_count.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count]
+    X = np.matrix(features).T
+    return X
+
+    
         
         
    

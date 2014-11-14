@@ -21,13 +21,18 @@ print df_training_all.head()
 
 # feature selection
 #X, Y = features.quick_and_dirty(df_training[2])
-X, Y = features.not_so_quick(df_training[2],df_training[1],df_training[0])
-
+#X, Y = features.not_so_quick(df_training[2],df_training[1],df_training[0])
+TrainMatrix = df_training[0].merge(df_training[1],on="business_id")
+TrainMatrix = TrainMatrix.merge(df_training[2],on="user_id")
+TestMatrix = df_test[0].merge(df_training[1],on="business_id")
+TestMatrix = TestMatrix.merge(df_training[2],on="user_id")
+XTrain,YTrain = features.not_so_quick_train(TrainMatrix)
+#XTest = features.not_so_quick_test(TestMatrix)
 # machine learning aka CS229 
 # splits for now-in the future we need to make the test matrix from the data
 # print X.shape
 # print Y.shape
-xtrain, xtest, ytrain, ytest = train_test_split(X, Y)
+xtrain, xtest, ytrain, ytest = train_test_split(XTrain, YTrain)
 clf = linear_model.LinearRegression().fit(xtrain, ytrain)
 
 print "RMSE: %.2f" % np.sqrt(np.mean((clf.predict(xtest) - ytest) ** 2))
