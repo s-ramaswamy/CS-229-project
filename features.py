@@ -106,7 +106,18 @@ def not_so_quick_test(block):
     X = np.matrix(features).T
     return X
 
-    
+ def preprocess_users(users):
+ 	gender = get_gender(users.user_name.values)
+ 	cool = np.empty([users.size])
+ 	useful = np.empty([users.size])
+ 	funny = np.empty([users.size])
+ 	for index, user in users.iterrows():
+ 		cool[index] = user.user_votes['cool']
+ 		useful[index] = user.user_votes['useful']
+ 		funny[index] = user.user_votes['funny']
+
+
+
         
         
    
