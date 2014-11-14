@@ -31,7 +31,7 @@ def get_gender(names):
             np.vstack(gender,1)
         elif(name.upper in male_names):
             np.vstack(gender,-1)
-        else
+        else:
             np.vstack(gender,0)
     return gender
 
