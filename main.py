@@ -21,13 +21,13 @@ import features
 
 # Load the data once and save the pickle files. Use df_training[0].to_pickle('./trainingreviews.pkl') etc.
 
-df_training[0] = pd.io.pickle.read_pickle('./trainingreviews.pkl')
-df_training[1] = pd.io.pickle.read_pickle('./trainingbusiness.pkl')
-df_training[2] = pd.io.pickle.read_pickle('./trainingusers.pkl')
+trainingreviews = pd.io.pickle.read_pickle('./trainingreviews.pkl')
+trainingbusiness = pd.io.pickle.read_pickle('./trainingbusiness.pkl')
+trainingusers = pd.io.pickle.read_pickle('./trainingusers.pkl')
 
-df_test[0] = pd.io.pickle.read_pickle('./testreviews.pkl')
-df_test[1] = pd.io.pickle.read_pickle('./testbusiness.pkl')
-df_test[2] = pd.io.pickle.read_pickle('./testusers.pkl')
+testreviews = pd.io.pickle.read_pickle('./testreviews.pkl')
+testbusiness = pd.io.pickle.read_pickle('./testbusiness.pkl')
+testusers = pd.io.pickle.read_pickle('./testusers.pkl')
 
 
 
