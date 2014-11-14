@@ -20,7 +20,12 @@ df_training_all, df_test_all = wrangle.merge_data(df_training, df_test, df_ID_ta
 # print df_training_all.head()
 
 # Load the data once and save the pickle files. Use df_training[0].to_pickle('./trainingreviews.pkl') etc.
-
+trainingreviews = df_training[0]
+trainingbusiness = df_training[1]
+trainingusers = df_training[2]
+testreviews = df_test[0]
+testusers = df_test[2]
+testbusiness = df_test[1]
 #trainingreviews = pd.io.pickle.read_pickle('./trainingreviews.pkl')
 #trainingbusiness = pd.io.pickle.read_pickle('./trainingbusiness.pkl')
 #trainingusers = pd.io.pickle.read_pickle('./trainingusers.pkl')
