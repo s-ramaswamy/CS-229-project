@@ -1,0 +1,31 @@
+# I did want to write a bit more for each section, but there is a limit on the number of sentences. Fill out the results and I think we're pretty set. 
+
+Members
+Jason Ting, Swaroop Ramaswamy
+
+Title
+Yelp Recommendation System
+
+Predicting 
+We are predicting how users will rate businesses they have not been to based on past data. 
+
+Data 
+Data are publicly available on Kaggle website competition on here as different json files: http://www.kaggle.com/c/yelp-recsys-2013/data. In the business json objects, there are 'type': 'business', 'business_id', 'name', 'neighborhoods', 'full_address', 'city', 'state', 'latitude', 'longitude', 'stars', 'review_count', 'categories', 'open'; in the review json objects, there are 'type', 'business_id', 'user_id', 'stars', 'text', 'date', 'votes'; in the user json objects, there are 'type','user','user_id','name','review_count','average_stars','votes','cool'. 
+
+Features 
+We have a 5 dimensional feature space with user average stars, gender, business open, business stars, business review count, user review count. The gender is mapped out from a list of names and the rest of the features are from the raw input data. 
+
+Models
+We are solving a regession problem so we used polynomial regression and PCA. We implemented the models using Python. 
+
+Results
+Training data: 229,907, Test data: 12,052 
+Linear regression-
+PCA - 
+
+
+Future
+Because some of the data is incomplete and can't get all the features for certain users, ie there are users without features that incorporate business stars since the business json file does not have that user, we plan on building separate models that excludes the missing features so that we can use all 36,404 test data and get an accurate measure of the RMSE through the Kaggle submission. We also want to add more features to the existing models. use regularization methods such as ridge regression, and test out other models. 
+
+Specific Questions
+We want to know if going about building separate models for users with missing data is the best approach for predictions. We will come to office hours for more help if we need it. 
