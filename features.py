@@ -21,7 +21,19 @@ def get_names_list():
               a.append(line.split()[0])
             else:  
               b.append(line.split()[0])
-    return a,b  
+    return a,b
+
+def get_gender(names):
+    gender = []
+    female_names, male_names = get_names_list()
+    for name in names:
+        if(name.upper() in female_names):
+            np.vstack(gender,1)
+        elif(name.upper in male_names):
+            np.vstack(gender,-1)
+        else
+            np.vstack(gender,0)
+    return gender
 
 # builds a quick and dirty model for project milestone report
 def quick_and_dirty(df):
@@ -67,6 +79,22 @@ def not_so_quick(users,business,reviews):
     Y = np.matrix(review_stars_vector)
     return X,Y
 
+def not_so_quick_block(block):
+    n_reviews = 1000
+    userlist = []
+    buslist = []
+    review_stars_vector = block.rev_stars.values
+    user_name = block.user_name.values
+    user_average_stars = block.user_average_stars.values
+    gender = get_gender(user_name)
+    bus_open = block.bus_open.values
+    bus_stars = block.bus_stars.values
+    bus_review_count = block.bus_review_count.values
+    user_review_count = block.user_review_count.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count]
+    X = np.matrix(features)
+    Y = np.matrix(review_stars_vector)
+    return X,Y
         
         
    
