@@ -94,7 +94,7 @@ def not_so_quick_train(block):
     Y = np.matrix(review_stars_vector).T
     return X,Y
 
-def not_so_quick_test(block)
+def not_so_quick_test(block):
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
     gender = get_gender(user_name)
