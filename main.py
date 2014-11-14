@@ -13,11 +13,23 @@ import wrangle
 import features
 
 # Load, clean, and wrangle data
-df_training, df_test, df_ID_table = wrangle.load_data()
-df_training, df_test = wrangle.clean_data(df_training, df_test)
-df_training, df_test = wrangle.rename_data(df_training, df_test)
-df_training_all, df_test_all = wrangle.merge_data(df_training, df_test, df_ID_table)
-print df_training_all.head()
+# df_training, df_test, df_ID_table = wrangle.load_data()
+# df_training, df_test = wrangle.clean_data(df_training, df_test)
+# df_training, df_test = wrangle.rename_data(df_training, df_test)
+# df_training_all, df_test_all = wrangle.merge_data(df_training, df_test, df_ID_table)
+# print df_training_all.head()
+
+# Load the data once and save the pickle files. Use df_training[0].to_pickle('./trainingreviews.pkl') etc.
+
+df_training[0] = pd.io.pickle.read_pickle('./trainingreviews.pkl')
+df_training[1] = pd.io.pickle.read_pickle('./trainingbusiness.pkl')
+df_training[2] = pd.io.pickle.read_pickle('./trainingusers.pkl')
+
+df_test[0] = pd.io.pickle.read_pickle('./testreviews.pkl')
+df_test[1] = pd.io.pickle.read_pickle('./testbusiness.pkl')
+df_test[2] = pd.io.pickle.read_pickle('./testusers.pkl')
+
+
 
 # feature selection
 #X, Y = features.quick_and_dirty(df_training[2])
