@@ -26,39 +26,24 @@ import features
 #testreviews = df_test[0]
 #testusers = df_test[2]
 #testbusiness = df_test[1]
+
+# loads the data from the code above from pickle failes
 trainingreviews = pd.io.pickle.read_pickle('./trainingreviews.pkl')
 trainingbusiness = pd.io.pickle.read_pickle('./trainingbusiness.pkl')
 trainingusers = pd.io.pickle.read_pickle('./trainingusers.pkl')
-
 testreviews = pd.io.pickle.read_pickle('./testreviews.pkl')
 testbusiness = pd.io.pickle.read_pickle('./testbusiness.pkl')
 testusers = pd.io.pickle.read_pickle('./testusers.pkl')
 
-# feature selection
-#X, Y = features.quick_and_dirty(df_training[2])
-#X, Y = features.not_so_quick(df_training[2],df_training[1],df_training[0])
+# merges the dataframes together
 TrainMatrix = trainingreviews.merge(trainingbusiness,on="business_id")
-TrainMatrix = TrainMatrix.merge(trainingusers,on="user_id")
-TestMatrix = testreviews.merge(testbusiness,on="business_id")
-TestMatrix = TestMatrix.merge(testusers,on="user_id")
+TrainMatrix = TrainMatrix.merge(trainingusers,on="user_id", how='left')
+TestMatrix = testreviews.merge(testbusiness,on="business_id", how='left')
+TestMatrix = TestMatrix.merge(testusers,on="user_id", how='left')
 XTrain,YTrain = features.not_so_quick_train(TrainMatrix)
 
-# I'm assuming df is the giant dataframe that includes all the nan values
-df_index = df.index.values.tolist()
-business_index = df['bus_stars'].index[df['bus_stars'].apply(np.isnan)]
-business_index = [df_index.index(i) for i in business_index]
-user_index = df['user_average_stars'].index[df['user_average_stars'].apply(np.isnan)]
-user_index = [df_index.index(i) for i in user_index]
-
-# finds the indices depending on what is missing
-missing_both_index = list(set(business_index) & set(user_index))
-missing_business_index = list(set(user_index) - set(business_index))
-missing_user_index = list(set(business_index) - set(user_index))
-
-# check the 2nd argument in the iloc index to see if I got the correct features
-missing_both_df = df.iloc[missing_both_index,:].values
-missing_business_df = df.iloc[missing_business_index,[0,1,5]].values
-missing_user_df = df.iloc[missing_user_index,[2,3,4]].values
+# splits the dataframe depending on what is missing
+missing_both_df, missing_business_df, missing_user_df, missing_none_df = separate_df(TestMatrix)
 
 #XTest = features.not_so_quick_test(TestMatrix)
 # machine learning aka CS229 

@@ -116,7 +116,25 @@ def preprocess_users(users):
  		useful[index] = user.user_votes['useful']
  		funny[index] = user.user_votes['funny']
 
+# splits the dataframe depending on what is missing
+def separate_df(TestMatrix):
+    df_index = TestMatrix.index.values.tolist()
+    business_index = pd.isnull(TestMatrix['bus_name']).tolist()
+    business_index = [i for i, elem in enumerate(business_index) if elem]
+    user_index = pd.isnull(TestMatrix['user_review_count']).tolist()
+    user_index = [i for i, elem in enumerate(user_index) if elem]
 
+    # finds the indices depending on what is missing
+    missing_both_index = list(set(business_index) & set(user_index))
+    missing_business_index = list(set(user_index) - set(business_index))
+    missing_user_index = list(set(business_index) - set(user_index))
+    missing_none = list(set(df_index) - set(business_index) - set(user_index))
+
+    missing_both_df = TestMatrix.iloc[missing_both_index,:]
+    missing_business_df = TestMatrix.iloc[missing_business_index, :]
+    missing_user_df = TestMatrix.iloc[missing_user_index, :]
+    missing_none_df = TestMatrix.iloc[missing_none, :]
+    return missing_both_df, missing_business_df, missing_user_df, missing_none_df
 
         
         
