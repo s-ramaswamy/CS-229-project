@@ -36,10 +36,12 @@ testbusiness = pd.io.pickle.read_pickle('./testbusiness.pkl')
 testusers = pd.io.pickle.read_pickle('./testusers.pkl')
 
 # merges the dataframes together
-TrainMatrix = trainingreviews.merge(trainingbusiness,on="business_id")
-TrainMatrix = TrainMatrix.merge(trainingusers,on="user_id", how='left')
-TestMatrix = testreviews.merge(testbusiness,on="business_id", how='left')
-TestMatrix = TestMatrix.merge(testusers,on="user_id", how='left')
+business = trainingbusiness.append(testbusiness)
+users = trainingusers.append(testusers)
+TrainMatrix = trainingreviews.merge(business,on="business_id")
+TrainMatrix = TrainMatrix.merge(users,on="user_id", how='left')
+TestMatrix = testreviews.merge(business,on="business_id", how='left')
+TestMatrix = TestMatrix.merge(users,on="user_id", how='left')
 XTrain,YTrain = features.not_so_quick_train(TrainMatrix)
 
 # splits the dataframe depending on what is missing

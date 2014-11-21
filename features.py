@@ -119,9 +119,9 @@ def preprocess_users(users):
 # splits the dataframe depending on what is missing
 def separate_df(TestMatrix):
     df_index = TestMatrix.index.values.tolist()
-    business_index = pd.isnull(TestMatrix['bus_name']).tolist()
+    business_index = pd.isnull(TestMatrix['bus_stars']).tolist()
     business_index = [i for i, elem in enumerate(business_index) if elem]
-    user_index = pd.isnull(TestMatrix['user_review_count']).tolist()
+    user_index = pd.isnull(TestMatrix['user_average_stars']).tolist()
     user_index = [i for i, elem in enumerate(user_index) if elem]
 
     # finds the indices depending on what is missing
