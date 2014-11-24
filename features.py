@@ -29,12 +29,19 @@ def get_gender(names):
     i = 0
     for name in names:
         gender[i] = 0
-        if(name.upper() in female_names):
-            gender[i] = 1
-        elif(name.upper() in male_names):
-            gender[i] = -1
-        i = i + 1    
+        try:
+            if(name.upper() in female_names):
+                gender[i] = 1
+            elif(name.upper() in male_names):
+                gender[i] = -1
+        except:
+            pass
+        i += 1    
     return gender
+
+# builds a model for the complete dataframe by hanlding missing data
+def complete():
+    return None
 
 # builds a quick and dirty model for project milestone report
 def quick_and_dirty(df):
@@ -81,6 +88,7 @@ def not_so_quick(users,business,reviews):
     return X,Y
 
 def not_so_quick_train(block):
+    block.fillna(value=1)
     review_stars_vector = block.rev_stars.values
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values

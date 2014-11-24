@@ -45,7 +45,7 @@ TestMatrix = TestMatrix.merge(users,on="user_id", how='left')
 XTrain,YTrain = features.not_so_quick_train(TrainMatrix)
 
 # splits the dataframe depending on what is missing
-missing_both_df, missing_business_df, missing_user_df, missing_none_df = separate_df(TestMatrix)
+missing_both_df, missing_business_df, missing_user_df, missing_none_df = features.separate_df(TestMatrix)
 
 #XTest = features.not_so_quick_test(TestMatrix)
 # machine learning aka CS229 
