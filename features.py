@@ -88,6 +88,7 @@ def not_so_quick(users,business,reviews):
     return X,Y
 
 def not_so_quick_train(block):
+    block.replace([np.inf, -np.inf], np.nan)
     block.fillna(value=1)
     review_stars_vector = block.rev_stars.values
     user_name = block.user_name.values
