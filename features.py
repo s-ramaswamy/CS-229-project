@@ -87,9 +87,10 @@ def not_so_quick(users,business,reviews):
     Y = np.matrix(review_stars_vector)
     return X,Y
 
+# main function to build full training model
 def not_so_quick_train(block):
-    block.replace([np.inf, -np.inf], np.nan)
-    block.fillna(value=1)
+    block = block.replace([np.inf, -np.inf], np.nan)
+    block.fillna(value=1, inplace=True)
     review_stars_vector = block.rev_stars.values
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
@@ -98,20 +99,32 @@ def not_so_quick_train(block):
     bus_stars = block.bus_stars.values
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count]
+    funny = block.funny.values
+    cool = block.cool.values
+    useful= block.useful.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful]
     X = np.matrix(features).T
     Y = np.matrix(review_stars_vector).T
-    return X,Y
+    return X, Y
 
-def not_so_quick_test(block):
+def not_so_quick_test(block, train):
+    block.bus_stars.fillna(value=train.bus_stars.mean())
+    block.user_average_stars.fillna(value=train.user_average_stars.mean())
+    block.funny.fillna(value=0,inplace=True)
+    block.cool.fillna(value=0,inplace=True)
+    block.useful.fillna(value=0,inplace=True)
+    block.fillna(value=1,inplace=True)
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
     gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.bus_stars.values
     bus_review_count = block.bus_review_count.values
-    user_review_count = block.user_review_count.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count]
+    user_review_count = block.user_review_count.valuesfunny = block.funny.values
+    funny = block.funny.values
+    cool = block.cool.values
+    useful = block.useful.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful]
     X = np.matrix(features).T
     return X
 
@@ -135,8 +148,8 @@ def separate_df(TestMatrix):
 
     # finds the indices depending on what is missing
     missing_both_index = list(set(business_index) & set(user_index))
-    missing_business_index = list(set(user_index) - set(business_index))
-    missing_user_index = list(set(business_index) - set(user_index))
+    missing_user_index = list(set(user_index) - set(business_index))
+    missing_business_index = list(set(business_index) - set(user_index))
     missing_none = list(set(df_index) - set(business_index) - set(user_index))
 
     missing_both_df = TestMatrix.iloc[missing_both_index,:]
