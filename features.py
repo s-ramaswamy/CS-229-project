@@ -112,11 +112,11 @@ def not_so_quick_train(block):
     return X, Y
 
 def not_so_quick_test(block, train):
-    block.bus_stars.fillna(value=train.bus_stars.mean())
-    block.user_average_stars.fillna(value=train.user_average_stars.mean())
-    block.funny.fillna(value=0,inplace=True)
-    block.cool.fillna(value=0,inplace=True)
-    block.useful.fillna(value=0,inplace=True)
+    block.bus_stars.fillna(value=4)
+    block.user_average_stars.fillna(value=5)
+    block.funny.fillna(value=1,inplace=True)
+    block.cool.fillna(value=1,inplace=True)
+    block.useful.fillna(value=1,inplace=True)
     block.fillna(value=3,inplace=True)
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
