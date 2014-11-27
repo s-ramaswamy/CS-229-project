@@ -68,8 +68,8 @@ missing_none_df = TestMatrix.iloc[missing_none, :]
 clf = linear_model.LinearRegression().fit(XTrain, YTrain)
 results = pd.DataFrame(TestMatrix.review_id.values, columns = ['review_id'])
 results['stars'] = clf.predict(XTest)
-results[results['stars'] < 0] = 0
-results[results['stars'] > 5] = 5
+results.stars[results['stars'] < 0] = 0
+results.stars[results['stars'] > 5] = 5
 results.to_csv('submission.csv', index = False)
 
 # print "RMSE: %.2f" % np.sqrt(np.mean((clf.predict(xtest) - ytest) ** 2))
