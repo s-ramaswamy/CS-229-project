@@ -2,14 +2,12 @@
 Jason Ting, Swaroop Ramaswamy
 CS 229 Final Project
 Main driver for the project. 
+http://scikit-learn.org/stable/auto_examples/imputation.html
 '''
 
 import pandas as pd
 import numpy as np
-from sklearn.cross_validation import train_test_split
-from sklearn import cross_validation, linear_model
-from sklearn import svm
-from sklearn.ensemble import RandomForestClassifier
+from sklearn import cross_validation, linear_model, ensemble, svm
 
 import wrangle
 import features
@@ -44,8 +42,6 @@ TrainMatrix = trainingreviews.merge(business,on="business_id")
 TrainMatrix = TrainMatrix.merge(users,on="user_id", how='left')
 TestMatrix = testreviews.merge(business,on="business_id", how='left')
 TestMatrix = TestMatrix.merge(users,on="user_id", how='left')
-XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
-XTest = features.not_so_quick_test(TestMatrix, TrainMatrix)
 
 # splits the dataframe depending on what is missing
 df_index = TestMatrix.index.values.tolist()
@@ -58,20 +54,26 @@ user_index = [i for i, elem in enumerate(user_index) if elem]
 missing_both_index = list(set(business_index) & set(user_index))
 missing_user_index = list(set(user_index) - set(business_index))
 missing_business_index = list(set(business_index) - set(user_index))
-missing_none = list(set(df_index) - set(business_index) - set(user_index))
+missing_none_index = list(set(df_index) - set(business_index) - set(user_index))
 
 missing_both_df = TestMatrix.iloc[missing_both_index,:]
 missing_business_df = TestMatrix.iloc[missing_business_index, :]
 missing_user_df = TestMatrix.iloc[missing_user_index, :]
-missing_none_df = TestMatrix.iloc[missing_none, :]
+missing_none_df = TestMatrix.iloc[missing_none_index, :]
+
+XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
+XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
 
 # machine learning aka CS229 
 # clf = linear_model.LinearRegression().fit(XTrain, YTrain)
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
-clf = linear_model.Lasso(alpha = 1)
+# clf = linear_model.Lasso(alpha = 1.0)
 # clf = linear_model.ElasticNet(alpha=1, l1_ratio=0.7)
+clf = ensemble.RandomForestRegressor(n_estimators = 10)
 # clf = svm.SVR() doesn't work????
-clf.fit(XTrain, YTrain)
+clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))
+
+# save the results
 results = pd.DataFrame(TestMatrix.review_id.values, columns = ['review_id'])
 results['stars'] = clf.predict(XTest)
 results.stars[results['stars'] < 0] = 0
@@ -79,6 +81,4 @@ results.stars[results['stars'] > 5] = 5
 results.to_csv('submission.csv', index = False)
 
 # print "RMSE: %.2f" % np.sqrt(np.mean((clf.predict(xtest) - ytest) ** 2))
-
-# save results
 
