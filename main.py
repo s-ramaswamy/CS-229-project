@@ -8,6 +8,8 @@ import pandas as pd
 import numpy as np
 from sklearn.cross_validation import train_test_split
 from sklearn import cross_validation, linear_model
+from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
 
 import wrangle
 import features
@@ -64,8 +66,12 @@ missing_user_df = TestMatrix.iloc[missing_user_index, :]
 missing_none_df = TestMatrix.iloc[missing_none, :]
 
 # machine learning aka CS229 
-# splits for now-in the future we need to make the test matrix from the data
-clf = linear_model.LinearRegression().fit(XTrain, YTrain)
+# clf = linear_model.LinearRegression().fit(XTrain, YTrain)
+# clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+clf = linear_model.Lasso(alpha = 1)
+# clf = linear_model.ElasticNet(alpha=1, l1_ratio=0.7)
+# clf = svm.SVR() doesn't work????
+clf.fit(XTrain, YTrain)
 results = pd.DataFrame(TestMatrix.review_id.values, columns = ['review_id'])
 results['stars'] = clf.predict(XTest)
 results.stars[results['stars'] < 0] = 0

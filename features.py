@@ -90,7 +90,11 @@ def not_so_quick(users,business,reviews):
 # main function to build full training model
 def not_so_quick_train(block):
     block = block.replace([np.inf, -np.inf], np.nan)
-    block.fillna(value=1, inplace=True)
+    block.bus_full_address = [v[-5:] for v in block.bus_full_address.values]
+    t = block.groupby('bus_full_address').aggregate(np.mean)
+    t.fillna(value=3.67, inplace=True)
+    # block.merge(t.bus_stars, right_index = True, how='left')
+    block.fillna(value=3, inplace=True)
     review_stars_vector = block.rev_stars.values
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
@@ -113,7 +117,7 @@ def not_so_quick_test(block, train):
     block.funny.fillna(value=0,inplace=True)
     block.cool.fillna(value=0,inplace=True)
     block.useful.fillna(value=0,inplace=True)
-    block.fillna(value=1,inplace=True)
+    block.fillna(value=3,inplace=True)
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
     gender = get_gender(user_name)
