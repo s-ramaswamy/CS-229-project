@@ -141,14 +141,14 @@ def not_so_quick_test(block, train, both_i, user_i, biz_i):
     return X
 
 def preprocess_users(users):
- 	gender = get_gender(users.user_name.values)
- 	cool = np.empty([users.size])
- 	useful = np.empty([users.size])
- 	funny = np.empty([users.size])
- 	for index, user in users.iterrows():
- 		cool[index] = user.user_votes['cool']
- 		useful[index] = user.user_votes['useful']
- 		funny[index] = user.user_votes['funny']
+    gender = get_gender(users.user_name.values)
+    cool = np.empty([users.size])
+    useful = np.empty([users.size])
+    funny = np.empty([users.size])
+    for index, user in users.iterrows():
+        cool[index] = user.user_votes['cool']
+        useful[index] = user.user_votes['useful']
+        funny[index] = user.user_votes['funny']
 
 # splits the dataframe depending on what is missing
 def separate_df(TestMatrix):
@@ -178,12 +178,12 @@ def franchise_list(block):
     d2 = dict((x,n.count(x)) for x in n)
     d2= sorted(d2.items(), key=lambda x: x[1])
     for franchise in franchises:
-    	d1[franchise] = block.bus_stars[block.bus_name == franchise].mean()
+        d1[franchise] = block.bus_stars[block.bus_name == franchise].mean()
     return d1,d2 
   
 def category_list(block):
     '''Returns two dictionaries. The first is a dictionary with averages for each category
-       in the input dataframe. The second is a dictionary with frequencies of each category'''
+      in the input dataframe. The second is a dictionary with frequencies of each category'''
     l = block.bus_categories.values.tolist()
     l = [item for sublist in l for item in sublist]
     l = list(set(l))
@@ -194,61 +194,61 @@ def category_list(block):
     return d1,d2    
 
 def add_categories_franchises(trainblock,testblock):
-	d1,d2 = category_list(trainblock)
-	testblock['category_average'] = 0
-	testblock['n_categories'] =  [len(x) for x in testblock.bus_categories.values.tolist()]
-	for category in d1:
-		testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)] = testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)].values+(d1[category]/testblock['n_categories'][testblock.bus_categories.map(lambda x: category in x)].values)
-	d1,d2 = franchise_list(trainblock)
-	testblock['franchise_average'] = 0
-	for x in testblock['bus_name']:
-		if(x in d1):
-			testblock['franchise_average'][testblock['bus_name']==x] = d1[x]
-		else:
-			testblock['franchise_average'][testblock['bus_name']==x] = trainblock.bus_stars.mean()			 
-	#testblock['franchise_average'] = [d1[x] for x in testblock['bus_name'].values.tolist()]
-	testblock['category_average'][testblock['category_average']==0] = trainblock.bus_stars.mean()
-	return testblock    
-   
+    d1,d2 = category_list(trainblock)
+    testblock['category_average'] = 0
+    testblock['n_categories'] =  [len(x) for x in testblock.bus_categories.values.tolist()]
+    for category in d1:
+        testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)] = testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)].values+(d1[category]/testblock['n_categories'][testblock.bus_categories.map(lambda x: category in x)].values)
+    d1,d2 = franchise_list(trainblock)
+    testblock['franchise_average'] = 0
+    for x in testblock['bus_name']:
+        if(x in d1):
+            testblock['franchise_average'][testblock['bus_name']==x] = d1[x]
+        else:
+            testblock['franchise_average'][testblock['bus_name']==x] = trainblock.bus_stars.mean()			 
+    #testblock['franchise_average'] = [d1[x] for x in testblock['bus_name'].values.tolist()]
+    testblock['category_average'][testblock['category_average']==0] = trainblock.bus_stars.mean()
+    return testblock    
+  
 def missing_none_features(block):
-	user_average_stars = block.user_average_stars.values
-	gender = get_gender(user_name)
-	bus_open = block.bus_open.values
-	bus_stars = block.bus_stars.values
-	bus_review_count = block.bus_review_count.values
-	user_review_count = block.user_review_count.values
-	category_average = block.category_average
-	features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
-	X = np.matrix(features).T
-	return X
+    user_average_stars = block.user_average_stars.values
+    gender = get_gender(user_name)
+    bus_open = block.bus_open.values
+    bus_stars = block.bus_stars.values
+    bus_review_count = block.bus_review_count.values
+    user_review_count = block.user_review_count.values
+    category_average = block.category_average
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    X = np.matrix(features).T
+    return X
 
 def missing_user_features(block):
-	user_average_stars = 3.6745254398890528
-	gender = get_gender(user_name)
-	bus_open = block.bus_open.values
-	bus_stars = block.bus_stars.values
-	bus_review_count = block.bus_review_count.values
-	user_review_count = block.user_review_count.values
-	category_average = block.category_average
-	features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
-	X = np.matrix(features).T
-	return X
+    user_average_stars = 3.6745254398890528
+    gender = get_gender(user_name)
+    bus_open = block.bus_open.values
+    bus_stars = block.bus_stars.values
+    bus_review_count = block.bus_review_count.values
+    user_review_count = block.user_review_count.values
+    category_average = block.category_average
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    X = np.matrix(features).T
+    return X
 
 def missing_business_features(block):
-	user_average_stars = block.user_average_stars.values
-	gender = get_gender(user_name)
-	bus_open = block.bus_open.values
-	bus_stars = block.franchise_average.values
-	bus_review_count = block.bus_review_count.values
-	user_review_count = block.user_review_count.values
-	category_average = block.category_average
-	features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
-	X = np.matrix(features).T
-	return X
+    user_average_stars = block.user_average_stars.values
+    gender = get_gender(user_name)
+    bus_open = block.bus_open.values
+    bus_stars = block.franchise_average.values
+    bus_review_count = block.bus_review_count.values
+    user_review_count = block.user_review_count.values
+    category_average = block.category_average
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    X = np.matrix(features).T
+    return X
 
 def missing_both_features(block):
-	user_average_stars = 3.6745254398890528
-	gender = get_gender(user_name)
+    user_average_stars = 3.6745254398890528
+    gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.franchise_average.values
     bus_review_count = block.bus_review_count.values
