@@ -162,6 +162,15 @@ def separate_df(TestMatrix):
     missing_none_df = TestMatrix.iloc[missing_none, :]
     return missing_both_df, missing_business_df, missing_user_df, missing_none_df
 
+def franchise_list(block):
+    '''Returns a sorted dictionary with frequency of each business name in the input dataframe'''
+    m = block.bus_name.values
+    n = list(m)
+    d = dict((x,n.count(x)) for x in n)
+    return sorted(d.items(), key=lambda x: x[1])
+  
+
+    
         
         
    
