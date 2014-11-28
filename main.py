@@ -65,8 +65,8 @@ missing_business_df = TestMatrix.iloc[missing_business_index, :]
 missing_user_df = TestMatrix.iloc[missing_user_index, :]
 missing_none_df = TestMatrix.iloc[missing_none_index, :]
 
-XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
-XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
+#XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
+#XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
 XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
 XTest1 = features.missing_both_features(missing_both_df)
 XTest2 = features.missing_both_features(missing_business_df)
