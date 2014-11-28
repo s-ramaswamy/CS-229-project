@@ -194,7 +194,7 @@ def category_list(block):
     return d1,d2    
 
 def add_categories_franchises(trainblock,testblock):
-	d1,d2 = features.category_list(trainblock)
+	d1,d2 = category_list(trainblock)
 	testblock['category_average'] = 0
 	testblock['n_categories'] =  [len(x) for x in testblock.bus_categories.values.tolist()]
 	for category in d1:
