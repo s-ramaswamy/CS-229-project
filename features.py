@@ -212,6 +212,8 @@ def add_categories_franchises(trainblock,testblock):
   
 def missing_none_features(block):
     user_average_stars = block.user_average_stars.values
+    user_name = block.user_name.values
+    user_name = block.user_name.values
     gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.bus_stars.values
@@ -224,6 +226,7 @@ def missing_none_features(block):
 
 def missing_user_features(block):
     user_average_stars = 3.6745254398890528
+    user_name = block.user_name.values
     gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.bus_stars.values
@@ -236,6 +239,7 @@ def missing_user_features(block):
 
 def missing_business_features(block):
     user_average_stars = block.user_average_stars.values
+    user_name = block.user_name.values
     gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.franchise_average.values
@@ -248,6 +252,7 @@ def missing_business_features(block):
 
 def missing_both_features(block):
     user_average_stars = 3.6745254398890528
+    user_name = block.user_name.values
     gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.franchise_average.values
@@ -260,6 +265,7 @@ def missing_both_features(block):
 
 def multiple_models_train_features(block):
     user_average_stars = block.user_average_stars.values
+    user_name = block.user_name.values
     gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.bus_stars.values
