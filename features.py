@@ -199,7 +199,7 @@ def add_categories_franchises(trainblock,testblock):
 	testblock['n_categories'] =  [len(x) for x in testblock.bus_categories.values.tolist()]
 	for category in d1:
 		testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)] = testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)].values+(d1[category]/testblock['n_categories'][testblock.bus_categories.map(lambda x: category in x)].values)
-	d1,d2 = features.franchise_list(trainblock)
+	d1,d2 = franchise_list(trainblock)
 	testblock['franchise_average'] = 0
 	testblock['franchise_average'] = [d1[x] for x in trainblock['bus_name'].values.tolist()]
 	testblock['category_average'][testblock['category_average']==0] = trainblock.bus_stars.mean()
