@@ -75,8 +75,8 @@ XTest4 = features.missing_none_features(missing_none_df)
 # machine learning aka CS229 
 # clf = linear_model.LinearRegression().fit(XTrain, YTrain)
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
-# clf = linear_model.Lasso(alpha = 1.0)
-clf = linear_model.ElasticNet(alpha=1, l1_ratio=0.7).fit(XTrain, YTrain)
+clf = linear_model.Lasso(alpha = 1.0)
+#clf = linear_model.ElasticNet(alpha=1, l1_ratio=0.7).fit(XTrain, YTrain)
 #clf = ensemble.RandomForestRegressor(n_estimators = 10)
 # clf = svm.SVR() doesn't work????
 #clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))
@@ -89,12 +89,12 @@ results3 = pd.DataFrame(missing_user_df.review_id.values, columns = ['review_id'
 results3['stars'] = clf.predict(XTest3)
 results4 = pd.DataFrame(missing_none_df.review_id.values, columns = ['review_id'])
 results4['stars'] = clf.predict(XTest4)
-netresults = results1.append(results2)
-netresults = netresults.append(results3)
-netresults = netresults.append(results4)
-netresults.stars[results['stars'] < 0] = 0
-netresults.stars[results['stars'] > 5] = 5
-netresults.to_csv('submission.csv', index = False)
+results = results1.append(results2)
+results = results.append(results3)
+results = results.append(results4)
+results.stars[results['stars'] < 0] = 0
+results.stars[results['stars'] > 5] = 5
+results.to_csv('submission.csv', index = False)
 # save the results
 #results = pd.DataFrame(TestMatrix.review_id.values, columns = ['review_id'])
 #results['stars'] = clf.predict(XTest)
