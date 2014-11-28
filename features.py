@@ -173,10 +173,20 @@ def franchise_list(block):
     m = block.bus_name.values
     n = list(m)
     d = dict((x,n.count(x)) for x in n)
-    return sorted(d.items(), key=lambda x: x[1])
+    d = sorted(d.items(), key=lambda x: x[1])
+    return 
   
-
-    
+def category_list(block):
+    '''Returns two dictionaries. The first is a dictionary with averages for each category
+       in the input dataframe. The second is a dictionary with frequencies of each category'''
+    l = block.bus_categories.values.tolist()
+    l = [item for sublist in l for item in sublist]
+    l = list(set(l))
+    d1,d2 = dict(),dict()
+    for category in l:
+        d1[category] = block.bus_stars[block.bus_categories.map(lambda x: category in x)].mean()
+        d2[category] = block.bus_stars[block.bus_categories.map(lambda x: category in x)].count()
+    return d1,d2    
         
         
    
