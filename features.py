@@ -225,7 +225,7 @@ def missing_none_features(block):
     return X
 
 def missing_user_features(block):
-    block.user_average_stars.fillna(value=3.6745254398890528)
+    block.user_average_stars = block.user_average_stars.fillna(value=3.6745254398890528)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
     gender = get_gender(user_name)
@@ -252,7 +252,7 @@ def missing_business_features(block):
     return X
 
 def missing_both_features(block):
-    block.user_average_stars.fillna(value=3.6745254398890528)
+    block.user_average_stars = block.user_average_stars.fillna(value=3.6745254398890528)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
     gender = get_gender(user_name)
