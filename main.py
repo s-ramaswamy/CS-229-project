@@ -36,6 +36,10 @@ testbusiness = pd.io.pickle.read_pickle('./testbusiness.pkl')
 testusers = pd.io.pickle.read_pickle('./testusers.pkl')
 
 # merges the dataframes together
+
+trainingbusiness = features.add_categories_franchises(trainingbusiness,trainingbusiness)
+testbusiness = features.add_categories_franchises(trainingbusiness,testbusiness)
+
 business = trainingbusiness.append(testbusiness)
 users = trainingusers.append(testusers)
 TrainMatrix = trainingreviews.merge(business,on="business_id")
@@ -63,9 +67,6 @@ missing_none_df = TestMatrix.iloc[missing_none_index, :]
 
 XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
 XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
-
-trainingbusiness = features.add_categories_franchises(trainingbusiness,trainingbusiness)
-testbusiness = features.add_categories_franchises(trainingbusiness,testbusiness)
 # machine learning aka CS229 
 # clf = linear_model.LinearRegression().fit(XTrain, YTrain)
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
