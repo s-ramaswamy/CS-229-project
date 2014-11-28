@@ -66,6 +66,7 @@ XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, 
 
 d1,d2 = features.category_list(trainingbusiness)
 trainingbusiness['category_average'] = 0
+trainingbusiness['n_categories'] =  [len(x) for x in trainingbusiness.bus_categories.values.tolist()]
 for category in d1:
 	trainingbusiness['category_average'][trainingbusiness.bus_categories.map(lambda x: category in x)] = trainingbusiness['category_average'][trainingbusiness.bus_categories.map(lambda x: category in x)].values+(d1[category]/trainingbusiness['n_categories'][trainingbusiness.bus_categories.map(lambda x: category in x)].values)
 
