@@ -169,7 +169,6 @@ def separate_df(TestMatrix):
     return missing_both_df, missing_business_df, missing_user_df, missing_none_df
 
 def franchise_list(block):
-	'''Returns two dictionaries. The first is a dictionary with averages for each franchise in the input dataframe. The second is a dictionary with frequencies of each franchise'''
     m = block.bus_name.values
     n = list(m)
     franchises = list(set(n))
