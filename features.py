@@ -111,12 +111,18 @@ def not_so_quick_train(block):
     Y = np.matrix(review_stars_vector).T
     return X, Y
 
-def not_so_quick_test(block, train):
-    block.bus_stars.fillna(value=4)
-    block.user_average_stars.fillna(value=5)
-    block.funny.fillna(value=1,inplace=True)
-    block.cool.fillna(value=1,inplace=True)
-    block.useful.fillna(value=1,inplace=True)
+def not_so_quick_test(block, train, both_i, user_i, biz_i):
+    '''
+    block.bus_stars.fillna(value=train.bus_stars.mean())
+    block.user_average_stars.fillna(value=train.user_average_stars.mean())
+    '''
+    block['bus_stars'][biz_i] = np.random.choice(train.bus_stars.values, size = len(biz_i))
+    block['bus_stars'][both_i] = np.random.choice(train.bus_stars.values, size = len(both_i))
+    block['user_average_stars'][user_i] = np.random.choice(train.user_average_stars.values, size = len(user_i))
+    block['user_average_stars'][both_i] = np.random.choice(train.user_average_stars.values, size = len(both_i))
+    block.funny.fillna(value=train.funny.mean(),inplace=True)
+    block.cool.fillna(value=train.cool.mean(),inplace=True)
+    block.useful.fillna(value=train.useful.mean(),inplace=True)
     block.fillna(value=3,inplace=True)
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
