@@ -206,7 +206,7 @@ def add_categories_franchises(trainblock,testblock):
 			testblock['franchise_average'][testblock['bus_name']==x] = d1[x]
 		else:
 			testblock['franchise_average'][testblock['bus_name']==x] = trainblock.bus_stars.mean()			 
-	testblock['franchise_average'] = [d1[x] for x in testblock['bus_name'].values.tolist()]
+	#testblock['franchise_average'] = [d1[x] for x in testblock['bus_name'].values.tolist()]
 	testblock['category_average'][testblock['category_average']==0] = trainblock.bus_stars.mean()
 	return testblock    
    
