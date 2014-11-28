@@ -213,38 +213,38 @@ def add_categories_franchises(trainblock,testblock):
 def missing_none_features(block):
 	user_average_stars = block.user_average_stars.values
 	gender = get_gender(user_name)
-    bus_open = block.bus_open.values
-    bus_stars = block.bus_stars.values
-    bus_review_count = block.bus_review_count.values
-    user_review_count = block.user_review_count.values
-    category_average = block.category_average
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
-    X = np.matrix(features).T
-    return X
+	bus_open = block.bus_open.values
+	bus_stars = block.bus_stars.values
+	bus_review_count = block.bus_review_count.values
+	user_review_count = block.user_review_count.values
+	category_average = block.category_average
+	features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+	X = np.matrix(features).T
+	return X
 
 def missing_user_features(block):
 	user_average_stars = 3.6745254398890528
 	gender = get_gender(user_name)
-    bus_open = block.bus_open.values
-    bus_stars = block.bus_stars.values
-    bus_review_count = block.bus_review_count.values
-    user_review_count = block.user_review_count.values
-    category_average = block.category_average
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
-    X = np.matrix(features).T
-    return X
+	bus_open = block.bus_open.values
+	bus_stars = block.bus_stars.values
+	bus_review_count = block.bus_review_count.values
+	user_review_count = block.user_review_count.values
+	category_average = block.category_average
+	features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+	X = np.matrix(features).T
+	return X
 
 def missing_business_features(block):
 	user_average_stars = block.user_average_stars.values
 	gender = get_gender(user_name)
-    bus_open = block.bus_open.values
-    bus_stars = block.franchise_average.values
-    bus_review_count = block.bus_review_count.values
-    user_review_count = block.user_review_count.values
-    category_average = block.category_average
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
-    X = np.matrix(features).T
-    return X
+	bus_open = block.bus_open.values
+	bus_stars = block.franchise_average.values
+	bus_review_count = block.bus_review_count.values
+	user_review_count = block.user_review_count.values
+	category_average = block.category_average
+	features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+	X = np.matrix(features).T
+	return X
 
 def missing_both_features(block):
 	user_average_stars = 3.6745254398890528
@@ -259,8 +259,8 @@ def missing_both_features(block):
     return X        
 
 def multiple_models_train_features(block):
-	user_average_stars = block.user_average_stars.values
-	gender = get_gender(user_name)
+    user_average_stars = block.user_average_stars.values
+    gender = get_gender(user_name)
     bus_open = block.bus_open.values
     bus_stars = block.bus_stars.values
     bus_review_count = block.bus_review_count.values
