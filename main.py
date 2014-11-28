@@ -69,9 +69,9 @@ missing_none_df = TestMatrix.iloc[missing_none_index, :]
 #XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
 XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
 XTest1 = features.missing_both_features(missing_both_df)
-XTest2 = features.missing_both_features(missing_business_df)
-XTest3 = features.missing_both_features(missing_user_df)
-XTest4 = features.missing_both_features(missing_none_df)
+XTest2 = features.missing_business_features(missing_business_df)
+XTest3 = features.missing_user_features(missing_user_df)
+XTest4 = features.missing_none_features(missing_none_df)
 # machine learning aka CS229 
 # clf = linear_model.LinearRegression().fit(XTrain, YTrain)
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
