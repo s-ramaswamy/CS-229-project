@@ -169,12 +169,17 @@ def separate_df(TestMatrix):
     return missing_both_df, missing_business_df, missing_user_df, missing_none_df
 
 def franchise_list(block):
-    '''Returns a sorted dictionary with frequency of each business name in the input dataframe'''
+	'''Returns two dictionaries. The first is a dictionary with averages for each franchise
+       in the input dataframe. The second is a dictionary with frequencies of each franchise'''
     m = block.bus_name.values
     n = list(m)
-    d = dict((x,n.count(x)) for x in n)
-    d = sorted(d.items(), key=lambda x: x[1])
-    return 
+    franchises = list(set(n))
+    d1 = dict()
+    d2 = dict((x,n.count(x)) for x in n)
+    d2= sorted(d2.items(), key=lambda x: x[1])
+    for franchise in franchises:
+    	d1[franchise] = block.bus_stars[block.bus_name == franchise].mean()
+    return d1,d2 
   
 def category_list(block):
     '''Returns two dictionaries. The first is a dictionary with averages for each category
