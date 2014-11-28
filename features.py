@@ -106,7 +106,8 @@ def not_so_quick_train(block):
     funny = block.funny.values
     cool = block.cool.values
     useful= block.useful.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful]
+    category_average = block.category_average
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful,category_average]
     X = np.matrix(features).T
     Y = np.matrix(review_stars_vector).T
     return X, Y
@@ -134,7 +135,8 @@ def not_so_quick_test(block, train, both_i, user_i, biz_i):
     funny = block.funny.values
     cool = block.cool.values
     useful = block.useful.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful]
+    category_average = block.category_average
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful,category_average]
     X = np.matrix(features).T
     return X
 
@@ -190,8 +192,18 @@ def category_list(block):
         d1[category] = block.bus_stars[block.bus_categories.map(lambda x: category in x)].mean()
         d2[category] = block.bus_stars[block.bus_categories.map(lambda x: category in x)].count()
     return d1,d2    
-        
-        
+
+def add_categories_franchises(trainblock,testblock):
+	d1,d2 = features.category_list(trainblock)
+	testblock['category_average'] = 0
+	testblock['n_categories'] =  [len(x) for x in testblock.bus_categories.values.tolist()]
+	for category in d1:
+		testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)] = testblock['category_average'][testblock.bus_categories.map(lambda x: category in x)].values+(d1[category]/testblock['n_categories'][testblock.bus_categories.map(lambda x: category in x)].values)
+	d1,d2 = features.franchise_list(trainblock)
+	testblock['franchise_average'] = 0
+	testblock['franchise_average'] = [d1[x] for x in trainblock['bus_name'].values.tolist()]
+	testblock['category_average'][testblock['category_average']==0] = trainblock.bus_stars.mean()        
+    return testblock    
    
 
 

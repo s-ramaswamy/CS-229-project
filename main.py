@@ -64,12 +64,8 @@ missing_none_df = TestMatrix.iloc[missing_none_index, :]
 XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
 XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
 
-d1,d2 = features.category_list(trainingbusiness)
-trainingbusiness['category_average'] = 0
-trainingbusiness['n_categories'] =  [len(x) for x in trainingbusiness.bus_categories.values.tolist()]
-for category in d1:
-	trainingbusiness['category_average'][trainingbusiness.bus_categories.map(lambda x: category in x)] = trainingbusiness['category_average'][trainingbusiness.bus_categories.map(lambda x: category in x)].values+(d1[category]/trainingbusiness['n_categories'][trainingbusiness.bus_categories.map(lambda x: category in x)].values)
-
+trainingbusiness = features.add_categories_franchises(trainingbusiness,trainingbusiness)
+testbusiness = features.add_categories_franchises(trainingbusiness,testbusiness)
 # machine learning aka CS229 
 # clf = linear_model.LinearRegression().fit(XTrain, YTrain)
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
