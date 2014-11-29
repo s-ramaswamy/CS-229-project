@@ -8,7 +8,7 @@ http://scikit-learn.org/stable/auto_examples/imputation.html
 import pandas as pd
 import numpy as np
 from sklearn import cross_validation, linear_model, ensemble, svm
-
+from sklearn.decomposition import PCA
 import wrangle
 import features
 
@@ -68,7 +68,9 @@ missing_none_df = TestMatrix.iloc[missing_none_index, :]
 #XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
 #XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
 XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
-
+pca = PCA(n_components =2)
+pca = pca.fit(XTrain)
+XTrain = pca.transform(XTrain)
 #XTrain1 = features.missing_both_features(TrainMatrix)
 #XTrain2 = features.missing_business_features(TrainMatrix)
 #XTrain3 = features.missing_user_features(TrainMatrix)
@@ -77,8 +79,9 @@ XTest1 = features.missing_both_features(missing_both_df)
 XTest2 = features.missing_business_features(missing_business_df)
 XTest3 = features.missing_user_features(missing_user_df)
 XTest4 = features.missing_none_features(missing_none_df)
+XTest1,XTest2,XTest3,XTest4 = pca.transform(XTest1),pca.transform(XTest2),pca.transform(XTest3),pca.transform(XTest4)
 # machine learning aka CS229 
-clf = linear_model.LinearRegression().fit(XTrain,Ytrain)
+clf = linear_model.LinearRegression().fit(XTrain,YTrain)
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
 #clf = linear_model.Lasso(alpha = 1.0)
 #clf = linear_model.ElasticNet(alpha=1, l1_ratio=0.7).fit(XTrain, YTrain)

@@ -236,7 +236,7 @@ def missing_user_features(block):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
-    features = [gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
     X = np.matrix(features).T
     return X
 
@@ -265,7 +265,7 @@ def missing_both_features(block):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
-    features = [gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
     X = np.matrix(features).T
     return X        
 
