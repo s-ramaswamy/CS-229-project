@@ -82,10 +82,10 @@ XTest3 = features.missing_user_features(missing_user_df,TrainMatrix)
 XTest4 = features.missing_none_features(missing_none_df,TrainMatrix)
 #XTest1,XTest2,XTest3,XTest4 = pca.transform(XTest1),pca.transform(XTest2),pca.transform(XTest3),pca.transform(XTest4)
 # machine learning aka CS229 
-clf = linear_model.LinearRegression().fit(XTrain,YTrain)
-# clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+#clf = linear_model.LinearRegression().fit(XTrain,YTrain)
+#clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0]).fit(XTrain,YTrain)
 #clf = linear_model.Lasso(alpha = 1.0)
-#clf = linear_model.ElasticNet(alpha=1, l1_ratio=0.7).fit(XTrain, YTrain)
+clf = linear_model.ElasticNetCV().fit(XTrain, YTrain)
 #clf = ensemble.RandomForestRegressor(n_estimators = 10)
 # clf = svm.SVR() doesn't work????
 #clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))

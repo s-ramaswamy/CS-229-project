@@ -29,7 +29,7 @@ def get_gender(names):
     female_names, male_names = get_names_list()
     i = 0
     for name in names:
-        gender[i] = -1
+        gender[i] = 0
         try:
             if(name.upper() in female_names):
                 gender[i] = 1
