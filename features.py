@@ -11,6 +11,7 @@ from scipy.sparse import coo_matrix, hstack, vstack
 import numpy as np
 import pandas as pd
 from datetime import datetime
+from collections import Counter
 
 def get_names_list():
     a = list()
