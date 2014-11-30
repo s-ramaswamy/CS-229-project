@@ -7,6 +7,7 @@ https://github.com/theusual/kaggle-yelp-business-rating-prediction/blob/master/f
 
 from sklearn.feature_extraction import DictVectorizer
 from sklearn import preprocessing
+from sklearn import linear_model,ensemble
 from scipy.sparse import coo_matrix, hstack, vstack
 import numpy as np
 import pandas as pd
