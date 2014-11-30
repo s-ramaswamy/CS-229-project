@@ -11,6 +11,7 @@ from scipy.sparse import coo_matrix, hstack, vstack
 import numpy as np
 import pandas as pd
 from datetime import datetime
+from collections import Counter
 
 def get_names_list():
     a = list()
@@ -221,12 +222,13 @@ def missing_none_features(block,train):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    name_rating = block.name_rating.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
     X = np.matrix(features).T
     return X
 
 def missing_user_features(block,train):    
-    block.user_average_stars = np.random.choice(train.user_average_stars.values, size = len(block.user_average_stars.values))
+    #block.user_average_stars = np.random.choice(train.user_average_stars.values, size = len(block.user_average_stars.values))
     block.fillna(value=3.6745254398890528,inplace=True)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
@@ -236,7 +238,8 @@ def missing_user_features(block,train):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    name_rating = block.name_rating.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
     X = np.matrix(features).T
     return X
 
@@ -250,12 +253,13 @@ def missing_business_features(block,train):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    name_rating = block.name_rating.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
     X = np.matrix(features).T
     return X
 
 def missing_both_features(block,train):
-    block.user_average_stars = np.random.choice(train.user_average_stars.values, size = len(block.user_average_stars.values))
+    #block.user_average_stars = np.random.choice(train.user_average_stars.values, size = len(block.user_average_stars.values))
     block.fillna(value=3.6745254398890528,inplace=True)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
@@ -265,7 +269,8 @@ def missing_both_features(block,train):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    name_rating = block.name_rating.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
     X = np.matrix(features).T
     return X        
 
@@ -279,11 +284,51 @@ def multiple_models_train_features(block):
     bus_review_count = block.bus_review_count.values
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
+    name_rating = block.name_rating.values
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
     X = np.matrix(features).T
     review_stars_vector = block.rev_stars.values
     Y = np.matrix(review_stars_vector).T
     return X, Y
 
+def word_ratings(train):
+    d3 = dict()
+    allwords = list()
+    i = 0
+    l1 = train.bus_name.values.tolist()
+    l2 = train.bus_stars.values.tolist()
+    for key in l1:
+        words = key.split()
+        allwords.extend(words)
+        for word in words:
+            if(word not in d3):
+                d3[word] = 0
+        for word in words:
+            d3[word] = d3[word] + l2[i]
+        i +=1    
 
+    d4 = Counter(allwords)        
 
+    wordratings = dict()        
+    for key in d3:
+            wordratings[key] = d3[key]/d4[key]
+    return wordratings        
+    
+def addwordratings(train,test):
+    wordratings = word_ratings(train)
+    l1 = test.bus_name.values.tolist()
+    l2 = list()
+    for key in l1:
+        words = key.split()
+        namerating = 0;
+        for word in words:
+            if(word in wordratings):
+                namerating += wordratings[word]
+            else:    
+                namerating += 3.6745254398890528     
+        namerating = namerating/len(words)
+        l2.append(namerating)
+    test['name_rating'] = l2;
+    return test
+        
+            
