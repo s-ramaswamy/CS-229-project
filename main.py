@@ -12,6 +12,8 @@ from sklearn.decomposition import PCA
 import wrangle
 import features
 
+print 'Started'
+
 #Load, clean, and wrangle data
 #df_training, df_test, df_ID_table = wrangle.load_data()
 #df_training, df_test = wrangle.clean_data(df_training, df_test)
@@ -66,9 +68,9 @@ missing_business_df = TestMatrix.iloc[missing_business_index, :]
 missing_user_df = TestMatrix.iloc[missing_user_index, :]
 missing_none_df = TestMatrix.iloc[missing_none_index, :]
 
-#XTrain, YTrain = features.not_so_quick_train(TrainMatrix)
-#XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index)
-XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
+XTrain, YTrain, clf_users, clf_biz, clf_both_user, clf_both_biz = features.not_so_quick_train(TrainMatrix)
+XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index, clf_users, clf_biz, clf_both_user, clf_both_biz)
+# XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
 #pca = PCA(n_components =2)
 #pca = pca.fit(XTrain)
 #XTrain = pca.transform(XTrain)
@@ -76,6 +78,16 @@ XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
 #XTrain2 = features.missing_business_features(TrainMatrix)
 #XTrain3 = features.missing_user_features(TrainMatrix)
 #XTrain4 = features.missing_none_features(TrainMatrix)
+<<<<<<< HEAD
+#XTest1 = features.missing_both_features(missing_both_df)
+#XTest2 = features.missing_business_features(missing_business_df)
+#XTest3 = features.missing_user_features(missing_user_df)
+#XTest4 = features.missing_none_features(missing_none_df)
+#XTest1,XTest2,XTest3,XTest4 = pca.transform(XTest1),pca.transform(XTest2),pca.transform(XTest3),pca.transform(XTest4)
+# machine learning aka CS229 
+clf = linear_model.LinearRegression()
+# clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+=======
 XTest1 = features.missing_both_features(missing_both_df,TrainMatrix)
 XTest2 = features.missing_business_features(missing_business_df,TrainMatrix)
 XTest3 = features.missing_user_features(missing_user_df,TrainMatrix)
@@ -84,35 +96,36 @@ XTest4 = features.missing_none_features(missing_none_df,TrainMatrix)
 # machine learning aka CS229 
 #clf = linear_model.LinearRegression().fit(XTrain,YTrain)
 #clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0]).fit(XTrain,YTrain)
+>>>>>>> c58934d096ee195cc6fddad56b2fda424f28052d
 #clf = linear_model.Lasso(alpha = 1.0)
 clf = linear_model.ElasticNetCV(max_iter = 10000).fit(XTrain, np.squeeze(np.asarray(YTrain)))
 #clf = ensemble.RandomForestRegressor(n_estimators = 10)
 # clf = svm.SVR() doesn't work????
-#clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))
+clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))
 #clf = linear_model.LinearRegression().fit(XTrain1,YTrain)
-results1 = pd.DataFrame(missing_both_df.review_id.values, columns = ['review_id'])
-results1['stars'] = clf.predict(XTest1)
+# results1 = pd.DataFrame(missing_both_df.review_id.values, columns = ['review_id'])
+# results1['stars'] = clf.predict(XTest1)
 #clf = linear_model.LinearRegression().fit(XTrain2,YTrain)
-results2 = pd.DataFrame(missing_business_df.review_id.values, columns = ['review_id'])
-results2['stars'] = clf.predict(XTest2)
+# results2 = pd.DataFrame(missing_business_df.review_id.values, columns = ['review_id'])
+# results2['stars'] = clf.predict(XTest2)
 #clf = linear_model.LinearRegression().fit(XTrain3,YTrain)
-results3 = pd.DataFrame(missing_user_df.review_id.values, columns = ['review_id'])
-results3['stars'] = clf.predict(XTest3)
+# results3 = pd.DataFrame(missing_user_df.review_id.values, columns = ['review_id'])
+# results3['stars'] = clf.predict(XTest3)
 #clf = linear_model.LinearRegression().fit(XTrain4,YTrain)
-results4 = pd.DataFrame(missing_none_df.review_id.values, columns = ['review_id'])
-results4['stars'] = clf.predict(XTest4)
-results = results1.append(results2)
-results = results.append(results3)
-results = results.append(results4)
+# results4 = pd.DataFrame(missing_none_df.review_id.values, columns = ['review_id'])
+# results4['stars'] = clf.predict(XTest4)
+# results = results1.append(results2)
+# results = results.append(results3)
+# results = results.append(results4)
+# results.stars[results['stars'] < 0] = 0
+# results.stars[results['stars'] > 5] = 5
+# results.to_csv('submission.csv', index = False)
+# save the results
+results = pd.DataFrame(TestMatrix.review_id.values, columns = ['review_id'])
+results['stars'] = clf.predict(XTest)
 results.stars[results['stars'] < 0] = 0
 results.stars[results['stars'] > 5] = 5
 results.to_csv('submission.csv', index = False)
-# save the results
-#results = pd.DataFrame(TestMatrix.review_id.values, columns = ['review_id'])
-#results['stars'] = clf.predict(XTest)
-#results.stars[results['stars'] < 0] = 0
-#results.stars[results['stars'] > 5] = 5
-#results.to_csv('submission.csv', index = False)
 
 # print "RMSE: %.2f" % np.sqrt(np.mean((clf.predict(xtest) - ytest) ** 2))
 
