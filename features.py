@@ -268,7 +268,7 @@ def missing_none_features(block,train):
     cool = block.cool.values
     funny = block.funny.values
     useful = block.useful.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     X = np.matrix(features).T
     return X
 
@@ -287,7 +287,7 @@ def missing_user_features(block,train):
     cool = block.cool.values
     funny = block.funny.values
     useful = block.useful.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     X = np.matrix(features).T
     return X
 
@@ -305,7 +305,7 @@ def missing_business_features(block,train):
     cool = block.cool.values
     funny = block.funny.values
     useful = block.useful.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     X = np.matrix(features).T
     return X
 
@@ -324,7 +324,7 @@ def missing_both_features(block,train):
     cool = block.cool.values
     funny = block.funny.values
     useful = block.useful.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     X = np.matrix(features).T
     return X        
 
@@ -342,7 +342,7 @@ def multiple_models_train_features(block):
     cool = block.cool.values
     funny = block.funny.values
     useful = block.useful.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     X = np.matrix(features).T
     review_stars_vector = block.rev_stars.values
     Y = np.matrix(review_stars_vector).T
