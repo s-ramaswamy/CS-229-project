@@ -41,7 +41,8 @@ testusers = pd.io.pickle.read_pickle('./testusers.pkl')
 
 trainingbusiness = features.add_categories_franchises(trainingbusiness,trainingbusiness)
 testbusiness = features.add_categories_franchises(trainingbusiness,testbusiness)
-
+trainingbusiness = features.addwordratings(trainingbusiness,trainingbusiness)
+testbusiness = features.addwordratings(trainingbusiness,testbusiness)
 business = trainingbusiness.append(testbusiness)
 users = trainingusers.append(testusers)
 TrainMatrix = trainingreviews.merge(business,on="business_id")
@@ -77,6 +78,7 @@ XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, 
 #XTrain2 = features.missing_business_features(TrainMatrix)
 #XTrain3 = features.missing_user_features(TrainMatrix)
 #XTrain4 = features.missing_none_features(TrainMatrix)
+<<<<<<< HEAD
 #XTest1 = features.missing_both_features(missing_both_df)
 #XTest2 = features.missing_business_features(missing_business_df)
 #XTest3 = features.missing_user_features(missing_user_df)
@@ -85,8 +87,18 @@ XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, 
 # machine learning aka CS229 
 clf = linear_model.LinearRegression()
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+=======
+XTest1 = features.missing_both_features(missing_both_df,TrainMatrix)
+XTest2 = features.missing_business_features(missing_business_df,TrainMatrix)
+XTest3 = features.missing_user_features(missing_user_df,TrainMatrix)
+XTest4 = features.missing_none_features(missing_none_df,TrainMatrix)
+#XTest1,XTest2,XTest3,XTest4 = pca.transform(XTest1),pca.transform(XTest2),pca.transform(XTest3),pca.transform(XTest4)
+# machine learning aka CS229 
+#clf = linear_model.LinearRegression().fit(XTrain,YTrain)
+#clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0]).fit(XTrain,YTrain)
+>>>>>>> c58934d096ee195cc6fddad56b2fda424f28052d
 #clf = linear_model.Lasso(alpha = 1.0)
-#clf = linear_model.ElasticNet(alpha=1, l1_ratio=0.7).fit(XTrain, YTrain)
+clf = linear_model.ElasticNetCV().fit(XTrain, YTrain)
 #clf = ensemble.RandomForestRegressor(n_estimators = 10)
 # clf = svm.SVR() doesn't work????
 clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))
