@@ -210,7 +210,7 @@ def add_categories_franchises(trainblock,testblock):
     testblock['category_average'][testblock['category_average']==0] = trainblock.bus_stars.mean()
     return testblock    
   
-def missing_none_features(block):
+def missing_none_features(block,train):
     block.fillna(value=3.6745254398890528,inplace=True)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
@@ -225,8 +225,8 @@ def missing_none_features(block):
     X = np.matrix(features).T
     return X
 
-def missing_user_features(block):
-    block.user_average_stars = block.user_average_stars.fillna(value=3.6745254398890528)
+def missing_user_features(block,train):    
+    block.user_average_stars = np.random.choice(train.user_average_stars.values, size = len(block.user_average_stars.values))
     block.fillna(value=3.6745254398890528,inplace=True)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
@@ -240,7 +240,7 @@ def missing_user_features(block):
     X = np.matrix(features).T
     return X
 
-def missing_business_features(block):
+def missing_business_features(block,train):
     block.fillna(value=3.6745254398890528,inplace=True)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
@@ -254,8 +254,8 @@ def missing_business_features(block):
     X = np.matrix(features).T
     return X
 
-def missing_both_features(block):
-    block.user_average_stars = block.user_average_stars.fillna(value=3.6745254398890528)
+def missing_both_features(block,train):
+    block.user_average_stars = np.random.choice(train.user_average_stars.values, size = len(block.user_average_stars.values))
     block.fillna(value=3.6745254398890528,inplace=True)
     user_average_stars = block.user_average_stars.values
     user_name = block.user_name.values
