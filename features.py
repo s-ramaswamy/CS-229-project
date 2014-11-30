@@ -11,6 +11,7 @@ from scipy.sparse import coo_matrix, hstack, vstack
 import numpy as np
 import pandas as pd
 from datetime import datetime
+from sklearn import cross_validation, linear_model, ensemble, svm
 
 def get_names_list():
     a = list()
@@ -38,10 +39,6 @@ def get_gender(names):
             pass
         i += 1    
     return gender
-
-# builds a model for the complete dataframe by hanlding missing data
-def complete():
-    return None
 
 # builds a quick and dirty model for project milestone report
 def quick_and_dirty(df):
@@ -87,6 +84,45 @@ def not_so_quick(users,business,reviews):
     Y = np.matrix(review_stars_vector)
     return X,Y
 
+def predict_missing_data(features):
+    print 'Running...'
+    clf_users = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+    clf_biz = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+    clf_both_user = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+    clf_both_biz = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+    X_missing_users = np.matrix(features[1::]).T
+    X_missing_biz = np.matrix(features[0:2] + features[3::]).T
+    X_missing_both = np.matrix(features[1:2] + features[3::]).T
+    clf_users.fit(X_missing_users, features[0])
+    clf_biz.fit(X_missing_biz, features[2])
+    clf_both_user.fit(X_missing_both, features[0])
+    clf_both_biz.fit(X_missing_both, features[2])
+    print 'Ended'
+    return clf_users, clf_biz, clf_both_user, clf_both_biz
+
+def make_predicted_features(block2, clf_users, clf_biz, clf_both_user, clf_both_biz):
+    block = block2.copy()
+    block.fillna(value=3, inplace=True)
+    user_name = block.user_name.values
+    user_average_stars = block.user_average_stars.values
+    gender = get_gender(user_name)
+    bus_open = block.bus_open.values
+    bus_stars = block.bus_stars.values
+    bus_review_count = block.bus_review_count.values
+    user_review_count = block.user_review_count.values
+    funny = block.funny.values
+    cool = block.cool.values
+    useful = block.useful.values
+    category_average = block.category_average
+    X_users = [gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful,category_average]
+    y_users = clf_users.predict(np.matrix(X_users).T)
+    X_biz = [user_average_stars,gender,bus_open,bus_review_count,user_review_count,funny,cool,useful,category_average]
+    y_biz = clf_biz.predict(np.matrix(X_biz).T)
+    X_both = [gender,bus_open,bus_review_count,user_review_count,funny,cool,useful,category_average]
+    y_both_user = clf_both_user.predict(np.matrix(X_both).T)
+    y_both_biz = clf_both_biz.predict(np.matrix(X_both).T)
+    return y_users, y_biz, y_both_user, y_both_biz
+
 # main function to build full training model
 def not_so_quick_train(block):
     block = block.replace([np.inf, -np.inf], np.nan)
@@ -108,11 +144,12 @@ def not_so_quick_train(block):
     useful= block.useful.values
     category_average = block.category_average
     features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful,category_average]
+    clf_users, clf_biz, clf_both_user, clf_both_biz = predict_missing_data(features)
     X = np.matrix(features).T
     Y = np.matrix(review_stars_vector).T
-    return X, Y
+    return X, Y, clf_users, clf_biz, clf_both_user, clf_both_biz
 
-def not_so_quick_test(block, train, both_i, user_i, biz_i):
+def not_so_quick_test(block, train, both_i, user_i, biz_i, clf_users, clf_biz, clf_both_user, clf_both_biz):
     '''
     block.bus_stars.fillna(value=train.bus_stars.mean())
     block.user_average_stars.fillna(value=train.user_average_stars.mean())
@@ -124,7 +161,12 @@ def not_so_quick_test(block, train, both_i, user_i, biz_i):
     block.funny.fillna(value=train.funny.mean(),inplace=True)
     block.cool.fillna(value=train.cool.mean(),inplace=True)
     block.useful.fillna(value=train.useful.mean(),inplace=True)
-    block.fillna(value=3,inplace=True)
+    # y_users, y_biz, y_both_user, y_both_biz = make_predicted_features(block, clf_users, clf_biz, clf_both_user, clf_both_biz)
+    block['bus_stars'][biz_i] = y_biz[biz_i]
+    block['bus_stars'][both_i] = y_both_biz[both_i]
+    block['user_average_stars'][user_i] = y_users[user_i]
+    block['user_average_stars'][both_i] = y_both_user[both_i]
+    block.fillna(value=3, inplace=True)
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
     gender = get_gender(user_name)
