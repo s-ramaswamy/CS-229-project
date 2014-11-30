@@ -223,7 +223,7 @@ def missing_none_features(block,train):
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
     name_rating = block.name_rating.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
     X = np.matrix(features).T
     return X
 
@@ -239,7 +239,7 @@ def missing_user_features(block,train):
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
     name_rating = block.name_rating.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
     X = np.matrix(features).T
     return X
 
@@ -254,7 +254,7 @@ def missing_business_features(block,train):
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
     name_rating = block.name_rating.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
     X = np.matrix(features).T
     return X
 
@@ -270,7 +270,7 @@ def missing_both_features(block,train):
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
     name_rating = block.name_rating.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
     X = np.matrix(features).T
     return X        
 
@@ -285,7 +285,7 @@ def multiple_models_train_features(block):
     user_review_count = block.user_review_count.values
     category_average = block.category_average.values
     name_rating = block.name_rating.values
-    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating]
+    features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average]
     X = np.matrix(features).T
     review_stars_vector = block.rev_stars.values
     Y = np.matrix(review_stars_vector).T
