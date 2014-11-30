@@ -85,7 +85,7 @@ XTest4 = features.missing_none_features(missing_none_df,TrainMatrix)
 #clf = linear_model.LinearRegression().fit(XTrain,YTrain)
 #clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0]).fit(XTrain,YTrain)
 #clf = linear_model.Lasso(alpha = 1.0)
-clf = linear_model.ElasticNetCV().fit(XTrain, YTrain)
+clf = linear_model.ElasticNetCV(max_iter = 10000).fit(XTrain, np.squeeze(np.asarray(YTrain)))
 #clf = ensemble.RandomForestRegressor(n_estimators = 10)
 # clf = svm.SVR() doesn't work????
 #clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))
