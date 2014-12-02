@@ -87,7 +87,7 @@ def not_so_quick(users,business,reviews):
 
 def predict_missing_data(features):
     print 'Running...'
-    clf_users = llinear_model.Lasso(alpha = 1.0)
+    clf_users = linear_model.Lasso(alpha = 1.0)
     clf_biz = linear_model.Lasso(alpha = 1.0)
     clf_both_user = linear_model.Lasso(alpha = 1.0)
     clf_both_biz = linear_model.Lasso(alpha = 1.0)
@@ -146,7 +146,7 @@ def not_so_quick_train(block):
     category_average = block.category_average
     name_rating = block.name_rating.values
     features = [user_average_stars,gender,bus_open,bus_stars,bus_review_count,user_review_count,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
-    clf_users, clf_biz, clf_both_user, clf_both_biz = 0,0,0,0# predict_missing_data(features)
+    clf_users, clf_biz, clf_both_user, clf_both_biz = predict_missing_data(features)
     X = np.matrix(features).T
     Y = np.matrix(review_stars_vector).T
     return X, Y, clf_users, clf_biz, clf_both_user, clf_both_biz
@@ -155,7 +155,6 @@ def not_so_quick_test(block, train, both_i, user_i, biz_i, clf_users, clf_biz, c
     '''
     block.bus_stars.fillna(value=train.bus_stars.mean())
     block.user_average_stars.fillna(value=train.user_average_stars.mean())
-    '''
     block['bus_stars'][biz_i] = np.random.choice(train.bus_stars.values, size = len(biz_i))
     block['bus_stars'][both_i] = np.random.choice(train.bus_stars.values, size = len(both_i))
     block['user_average_stars'][user_i] = np.random.choice(train.user_average_stars.values, size = len(user_i))
@@ -169,7 +168,7 @@ def not_so_quick_test(block, train, both_i, user_i, biz_i, clf_users, clf_biz, c
     block['bus_stars'][both_i] = y_both_biz[both_i]
     block['user_average_stars'][user_i] = y_users[user_i]
     block['user_average_stars'][both_i] = y_both_user[both_i]
-    '''
+
     block.fillna(value=3, inplace=True)
     user_name = block.user_name.values
     user_average_stars = block.user_average_stars.values
