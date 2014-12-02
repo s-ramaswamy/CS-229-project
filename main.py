@@ -100,8 +100,8 @@ print 'Fitting models'
 
 #XTest1,XTest2,XTest3,XTest4 = pca.transform(XTest1),pca.transform(XTest2),pca.transform(XTest3),pca.transform(XTest4)
 # machine learning aka CS229 
-clf = linear_model.LinearRegression()
-# clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
+# clf = linear_model.LinearRegression()
+clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
 # clf = linear_model.Lasso(alpha = 1.0)
 # clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99)
 # clf = ensemble.RandomForestRegressor(n_estimators = 10)
