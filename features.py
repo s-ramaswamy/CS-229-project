@@ -152,7 +152,7 @@ def not_so_quick_train(block):
     return X, Y, clf_users, clf_biz, clf_both_user, clf_both_biz
 
 def not_so_quick_test(block, train, both_i, user_i, biz_i, clf_users, clf_biz, clf_both_user, clf_both_biz):
-    
+    '''
     block.bus_stars.fillna(value=train.bus_stars.mean())
     block.user_average_stars.fillna(value=train.user_average_stars.mean())
     '''
@@ -163,7 +163,7 @@ def not_so_quick_test(block, train, both_i, user_i, biz_i, clf_users, clf_biz, c
     block.funny.fillna(value=train.funny.mean(),inplace=True)
     block.cool.fillna(value=train.cool.mean(),inplace=True)
     block.useful.fillna(value=train.useful.mean(),inplace=True)
-
+    '''
     y_users, y_biz, y_both_user, y_both_biz = make_predicted_features(block, clf_users, clf_biz, clf_both_user, clf_both_biz)
     block['bus_stars'][biz_i] = y_biz[biz_i]
     block['bus_stars'][both_i] = y_both_biz[both_i]
