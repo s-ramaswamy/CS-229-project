@@ -87,10 +87,10 @@ def not_so_quick(users,business,reviews):
 
 def predict_missing_data(features):
     print 'Running...'
-    clf_users = linear_model.LassoCV(alphas=[0.01, 0.1, 1.0, 10.0])
-    clf_biz = linear_model.LassoCV(alphas=[0.01, 0.1, 1.0, 10.0])
-    clf_both_user = linear_model.LassoCV(alphas=[0.01, 0.1, 1.0, 10.0])
-    clf_both_biz = linear_model.LassoCV(alphas=[0.01, 0.1, 1.0, 10.0])
+    clf_users = llinear_model.Lasso(alpha = 1.0)
+    clf_biz = linear_model.Lasso(alpha = 1.0)
+    clf_both_user = linear_model.Lasso(alpha = 1.0)
+    clf_both_biz = linear_model.Lasso(alpha = 1.0)
     X_missing_users = np.matrix(features[1::]).T
     X_missing_biz = np.matrix(features[0:2] + features[3::]).T
     X_missing_both = np.matrix(features[1:2] + features[3::]).T
@@ -152,6 +152,7 @@ def not_so_quick_train(block):
     return X, Y, clf_users, clf_biz, clf_both_user, clf_both_biz
 
 def not_so_quick_test(block, train, both_i, user_i, biz_i, clf_users, clf_biz, clf_both_user, clf_both_biz):
+    '''
     block.bus_stars.fillna(value=train.bus_stars.mean())
     block.user_average_stars.fillna(value=train.user_average_stars.mean())
     '''
@@ -162,7 +163,7 @@ def not_so_quick_test(block, train, both_i, user_i, biz_i, clf_users, clf_biz, c
     block.funny.fillna(value=train.funny.mean(),inplace=True)
     block.cool.fillna(value=train.cool.mean(),inplace=True)
     block.useful.fillna(value=train.useful.mean(),inplace=True)
-
+    '''
     y_users, y_biz, y_both_user, y_both_biz = make_predicted_features(block, clf_users, clf_biz, clf_both_user, clf_both_biz)
     block['bus_stars'][biz_i] = y_biz[biz_i]
     block['bus_stars'][both_i] = y_both_biz[both_i]
