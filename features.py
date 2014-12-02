@@ -115,11 +115,12 @@ def make_predicted_features(block2, clf_users, clf_biz, clf_both_user, clf_both_
     cool = block.cool.values
     useful = block.useful.values
     category_average = block.category_average
-    X_users = [gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful,category_average]
+    name_rating = block.name_rating.values
+    X_users = [gender,bus_open,bus_stars,bus_review_count,user_review_count,funny,cool,useful,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     y_users = clf_users.predict(np.matrix(X_users).T)
-    X_biz = [user_average_stars,gender,bus_open,bus_review_count,user_review_count,funny,cool,useful,category_average]
+    X_biz = [user_average_stars,gender,bus_open,bus_review_count,user_review_count,funny,cool,useful,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     y_biz = clf_biz.predict(np.matrix(X_biz).T)
-    X_both = [gender,bus_open,bus_review_count,user_review_count,funny,cool,useful,category_average]
+    X_both = [gender,bus_open,bus_review_count,user_review_count,funny,cool,useful,category_average,name_rating,cool,funny,useful,gender*category_average,bus_stars*bus_review_count,user_average_stars*user_review_count, user_average_stars*cool,user_average_stars*funny,user_average_stars*useful,user_average_stars*gender,bus_stars*gender]
     y_both_user = clf_both_user.predict(np.matrix(X_both).T)
     y_both_biz = clf_both_biz.predict(np.matrix(X_both).T)
     return y_users, y_biz, y_both_user, y_both_biz
