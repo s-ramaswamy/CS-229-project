@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 from collections import Counter
+from scipy.sparse import *
 
 def get_names_list():
     a = list()
@@ -397,8 +398,9 @@ def tosvmlight(block,featurematrix,filename,YTrain,business,users,bizfitter,user
     
     a = block['business_id'].values.tolist()
     b = block['user_id'].values.tolist()
+    b = [str(i) for i in b]
     a1 = bizfitter.transform(a)
-    b1 = userfitter.tranform(b)
-    storagematrix = hstack(a1,b1,featurematrix)
+    b1 = userfitter.transform(b)
+    storagematrix = hstack([a1,b1,featurematrix])
     dump_svmlight_file(storagematrix,np.squeeze(np.asarray(YTrain))[0:storagematrix.shape[0]],filename)
                                                                     

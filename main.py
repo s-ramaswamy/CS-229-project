@@ -92,10 +92,10 @@ XTest4 = features.missing_none_features(missing_none_df)
 # clf = linear_model.LinearRegression()
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
 '''
-bizfitter = LabelBinarizer(sparse = True)
-userfitter = LabelBinarizer(sparse = True)
-bizfitter.fit(business)
-userfitter.fit(users)
+bizfitter = LabelBinarizer(sparse_output = True)
+userfitter = LabelBinarizer(sparse_output = True)
+bizfitter.fit(business['business_id'].values.tolist())
+userfitter.fit([str(i) for i in users['user_id'].values.tolist()])
 
 print 'Fitting models'
 
