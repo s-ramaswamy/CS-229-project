@@ -69,9 +69,9 @@ missing_none_df = TestMatrix.iloc[missing_none_index, :]
 
 print 'Making models'
 
-XTrain, YTrain, clf_users, clf_biz, clf_both_user, clf_both_biz = features.not_so_quick_train(TrainMatrix)
+#XTrain, YTrain, clf_users, clf_biz, clf_both_user, clf_both_biz = features.not_so_quick_train(TrainMatrix)
 #XTest = features.not_so_quick_test(TestMatrix, TrainMatrix, missing_both_index, missing_user_index, missing_business_index, clf_users, clf_biz, clf_both_user, clf_both_biz)
-# XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
+XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
 #pca = PCA(n_components =2)
 #pca = pca.fit(XTrain)
 #XTrain = pca.transform(XTrain)
@@ -104,16 +104,16 @@ print 'Fitting models'
 # clf = svm.SVR() doesn't work????
 #clf.fit(XTrain, np.squeeze(np.asarray(YTrain)))
 print 'Fitting the models and predicting'
-clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain1,np.squeeze(np.asarray(YTrain)))
+clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain,np.squeeze(np.asarray(YTrain)))
 results1 = pd.DataFrame(missing_both_df.review_id.values, columns = ['review_id'])
 results1['stars'] = clf.predict(XTest1)
-clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain2,np.squeeze(np.asarray(YTrain)))
+clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain,np.squeeze(np.asarray(YTrain)))
 results2 = pd.DataFrame(missing_business_df.review_id.values, columns = ['review_id'])
 results2['stars'] = clf.predict(XTest2)
-clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain3,np.squeeze(np.asarray(YTrain)))
+clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain,np.squeeze(np.asarray(YTrain)))
 results3 = pd.DataFrame(missing_user_df.review_id.values, columns = ['review_id'])
 results3['stars'] = clf.predict(XTest3)
-clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain4,np.squeeze(np.asarray(YTrain)))
+clf = linear_model.ElasticNetCV(max_iter = 100000, l1_ratio = 0.99).fit(XTrain,np.squeeze(np.asarray(YTrain)))
 results4 = pd.DataFrame(missing_none_df.review_id.values, columns = ['review_id'])
 results4['stars'] = clf.predict(XTest4)
 results = results1.append(results2)
