@@ -400,5 +400,5 @@ def tosvmlight(block,featurematrix,filename,YTrain,business,users,bizfitter,user
     a1 = bizfitter.transform(a)
     b1 = userfitter.tranform(b)
     storagematrix = hstack(a1,b1,featurematrix)
-    dump_svmlight_file(storagematrix,np.squeeze(np.asarray(YTrain))[0:storagematrix.shape[0],filename)
+    dump_svmlight_file(storagematrix,np.squeeze(np.asarray(YTrain))[0:storagematrix.shape[0]],filename)
                                                                     
