@@ -74,7 +74,7 @@ XTrain, YTrain, clf_users, clf_biz, clf_both_user, clf_both_biz = features.not_s
 # XTrain, YTrain = features.multiple_models_train_features(TrainMatrix)
 #pca = PCA(n_components =2)
 #pca = pca.fit(XTrain)
-XTrain = pca.transform(XTrain)
+#XTrain = pca.transform(XTrain)
 
 #XTrain1 = features.missing_both_features(TrainMatrix)
 #XTrain2 = features.missing_business_features(TrainMatrix)
