@@ -11,6 +11,7 @@ from sklearn import cross_validation, linear_model, ensemble, svm
 from sklearn.decomposition import PCA
 import wrangle
 import features
+from sklearn.preprocessing import LabelBinarizer
 
 print 'Started'
 
@@ -91,6 +92,10 @@ XTest4 = features.missing_none_features(missing_none_df)
 # clf = linear_model.LinearRegression()
 # clf = linear_model.RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])
 '''
+bizfitter = LabelBinarizer(sparse = True)
+userfitter = LabelBinarizer(sparse = True)
+bizfitter.fit(business)
+userfitter.fit(users)
 
 print 'Fitting models'
 
